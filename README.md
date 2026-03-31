@@ -1,6 +1,6 @@
 # 🏗️ Repo 1: Buzzly Infrastructure as Code (Azure)
 
-โปรเจกต์นี้ใช้ **Terraform** ในการจัดการโครงสร้างพื้นฐาน (Infrastructure) บน **Microsoft Azure** เพื่อรองรับการ Deploy เว็บไซต์ **Buzzly** ในรูปแบบ **Static Website hosting** ผ่าน Azure Storage Account
+โปรเจกต์นี้ใช้ **Terraform** ในการจัดการโครงสร้างพื้นฐาน (**Infrastructure**) บน **Microsoft Azure** เพื่อรองรับการ Deploy เว็บไซต์ **Buzzly** ในรูปแบบ **Static Website hosting** ผ่าน Azure Storage Account
 
 ---
 
@@ -8,11 +8,11 @@
 
 ภายใน Repo 1 ประกอบด้วยไฟล์หลักที่จำเป็นสำหรับการรัน Terraform ดังนี้:
 
-*   **`main.tf`**: ไฟล์หลักที่ใช้ประกาศสร้าง Resources ทั้งหมด (Resource Group, Storage Account, Storage Blob)
-*   **`variables.tf`**: ไฟล์ประกาศตัวแปร (Variables) สำหรับการปรับแต่งค่าต่างๆ เช่น ชื่อทรัพยากร, Location
-*   **`providers.tf`**: กำหนด Provider ที่ใช้ (ในที่นี้คือ `azurerm` ของ Azure)
-*   **`outputs.tf`**: กำหนดค่าการแสดงผลหลังจากการสร้างเสร็จสิ้น (เช่น URL ของเว็บไซต์)
-*   **`README.md`**: คู่มือการติดตั้งและใช้งาน (ไฟล์นี้)
+*   📘 **`main.tf`**: ไฟล์หลักที่ใช้ประกาศสร้าง Resources ทั้งหมด (Resource Group, Storage Account, Storage Blob)
+*   ⚙️ **`variables.tf`**: ไฟล์ประกาศตัวแปร (Variables) สำหรับการปรับแต่งค่าต่างๆ เช่น ชื่อทรัพยากร, Location
+*   📡 **`providers.tf`**: กำหนด Provider ที่ใช้ (ในที่นี้คือ `azurerm` ของ Azure)
+*   📤 **`outputs.tf`**: กำหนดค่าการแสดงผลหลังจากการสร้างเสร็จสิ้น (เช่น URL ของเว็บไซต์)
+*   📖 **`README.md`**: คู่มือการติดตั้งและใช้งาน (ไฟล์นี้)
 
 ---
 
@@ -20,10 +20,10 @@
 
 เพื่อให้สามารถรันคำสั่งได้โดยไม่มีข้อผิดพลาด กรุณาเตรียมการดังนี้:
 
-1.  **Azure Account**: มีสิทธิ์ในการสร้างทรัพยากร (เช่น Free Trial หรือ Pay-As-You-Go)
-2.  **Azure CLI**: ติดตั้งบนเครื่องเพื่อให้ Terraform สามารถ Authenticate กับ Azure ได้
-3.  **Terraform CLI**: เวอร์ชัน 1.0 หรือใหม่กว่า
-4.  **Node.js & npm**: สำหรับการรัน Build ไฟล์ของเว็บแอปพลิเคชัน (Vite/React)
+1.  ✅ **Azure Account**: มีสิทธิ์ในการสร้างทรัพยากร (เช่น Free Trial หรือ Pay-As-You-Go)
+2.  ✅ **Azure CLI**: ติดตั้งบนเครื่องเพื่อให้ Terraform สามารถ Authenticate กับ Azure ได้
+3.  ✅ **Terraform CLI**: เวอร์ชัน 1.0 หรือใหม่กว่า
+4.  ✅ **Node.js & npm**: สำหรับการรัน Build ไฟล์ของเว็บแอปพลิเคชัน (Vite/React)
 
 ---
 
@@ -31,26 +31,24 @@
 
 กรุณาทำตามลำดับขั้นตอนดังนี้เพื่อผลลัพธ์ที่ถูกต้อง:
 
-### Step 0: เตรียมไฟล์ Web (Build)
+### 🔹 Step 0: เตรียมไฟล์ Web (Build)
 เนื่องจาก Terraform จะทำการอัปโหลดไฟล์จากโฟลเดอร์ `/dist` ดังนั้นจำเป็นต้องสร้างไฟล์เหล่านั้นขึ้นมาก่อน:
 ```bash
 npm install
 npm run build
 ```
 
-### Step 1: Login เข้า Azure CLI (สำคัญ!)
+### 🔹 Step 1: Login เข้า Azure CLI (สำคัญ!)
 ต้องทำรายการนี้เพื่อให้ Terraform เข้าถึงสิทธิ์ในบัญชี Azure ของคุณได้:
 ```bash
 az login
 ```
-*ระบบจะเปิด Browser ให้คุณทำการ Login*
+> [!IMPORTANT]
+> ระบบจะเปิด Browser ให้คุณทำการ Login
+> **หากคุณมีหลาย Subscription ให้ระบุ ID ที่ต้องการด้วยคำสั่ง:**
+> `az account set --subscription "YOUR_SUBSCRIPTION_ID"`
 
-**หากคุณมีหลาย Subscription ให้ระบุ ID ที่ต้องการด้วยคำสั่ง:**
-```bash
-az account set --subscription "YOUR_SUBSCRIPTION_ID"
-```
-
-### Step 2: เริ่มทำงานกับ Terraform
+### 🔹 Step 2: เริ่มทำงานกับ Terraform
 เปิด Terminal ในโฟลเดอร์ที่มีไฟล์ `*.tf` แล้วรันคำสั่งตามลำดับ:
 
 1.  **Initialize**: ดาวน์โหลด Provider และตั้งค่าเริ่มต้น
@@ -75,7 +73,7 @@ az account set --subscription "YOUR_SUBSCRIPTION_ID"
 ```text
 website_url = "https://yourstorageaccount.z23.web.core.windows.net/"
 ```
-คุณสามารถคัดลอก URL นี้ไปเปิดในเว็บเบราว์เซอร์เพื่อเข้าใช้งานระบบ **Buzzly** ที่ทำงานอยู่บน Azure ได้ทันที
+คุณสามารถคัดลอก **URL** นี้ไปเปิดในเว็บเบราว์เซอร์เพื่อเข้าใช้งานระบบ **Buzzly** ที่ทำงานอยู่บน Azure ได้ทันที
 
 ---
 
@@ -83,10 +81,10 @@ website_url = "https://yourstorageaccount.z23.web.core.windows.net/"
 
 การรัน Terraform ใน Repo นี้จะสร้างทรัพยากรบน Azure ดังนี้:
 
-*   **Azure Resource Group**: กลุ่มทรัพยากรสำหรับจัดการโปรเจกต์ Buzzly โดยเฉพาะ
-*   **Azure Storage Account**: ใช้สำหรับการจัดเก็บไฟล์แบบ Blob สำหรับไฟล์ Static ของเว็บ
-*   **Static Website Hosting**: ฟีเจอร์ที่ทำให้เข้าถึงไฟล์ `index.html` ผ่าน URL สาธารณะได้
-*   **Automatic Upload**: ระบบจะทำการอัปโหลดไฟล์ HTML/CSS/JS จากโฟลเดอร์ `dist` ขึ้นไปยัง Azure อัตโนมัติ พร้อมกำหนด MIME Content-type ให้โดยอัตโนมัติ
+*   🏗️ **Azure Resource Group**: กลุ่มทรัพยากรสำหรับจัดการโปรเจกต์ Buzzly โดยเฉพาะ
+*   💾 **Azure Storage Account**: ใช้สำหรับการจัดเก็บไฟล์แบบ Blob สำหรับไฟล์ Static ของเว็บ
+*   🌐 **Static Website Hosting**: ฟีเจอร์ที่ทำให้เข้าถึงไฟล์ `index.html` ผ่าน URL สาธารณะได้
+*   🚀 **Automatic Upload**: ระบบจะทำการอัปโหลดไฟล์ HTML/CSS/JS จากโฟลเดอร์ `dist` ขึ้นไปยัง Azure อัตโนมัติ พร้อมกำหนด MIME Content-type ให้โดยอัตโนมัติ
 
 ---
 
